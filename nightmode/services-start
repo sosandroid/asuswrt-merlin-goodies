@@ -24,7 +24,7 @@
 cru a nigthmode_start "30 22 * * * /jffs/scripts/nightmode.sh -on"
 
 # Leds aligned on wifi all the nigth every 2 minutes between 0:00 and 7:00
-cru a leds_align "*/2 0-7 * * * /jffs/scripts/led_ctrl.sh align"
+cru a leds_align "*/2 0-7 * * * /jffs/scripts/led_ctrl.sh -align"
 
 # Nightmode disabled : summer vacations week at 9:00 from jul 15, Aug 31
 cru a nigthmode_stop_vac_jul "0 9 15-31 7 1-5 /jffs/scripts/nightmode.sh -off"

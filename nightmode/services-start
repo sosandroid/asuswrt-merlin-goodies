@@ -1,0 +1,42 @@
+#!/bin/sh
+# file: services-start
+# location: /jffs/scripts/
+#
+# Purpose : start addtionnal services rigth after the router is ready
+#
+# Date: 2017-05
+# Version 1.1
+#
+# Note: append this content to your existing fil if this schedule match your need
+#
+
+# Make scripts runnable at boot
+# chmod a+rx /jffs/scripts/*
+
+#---------------------------------
+
+# Add nightmode to crontab
+# minute | hour | day of mounth | mounth | day of week
+# cru a <name> " * * * * * /jffs/scripts/<script>"
+# debut des vacances le 15 juillet
+
+# Nightmode enabled : all days at 22h30
+cru a nigthmode_start "30 22 * * * /jffs/scripts/nightmode.sh -on"
+
+# Leds aligned on wifi all the nigth every 2 minutes between 0:00 and 7:00
+cru a leds_align "*/2 0-7 * * * /jffs/scripts/led_ctrl.sh align"
+
+# Nightmode disabled : summer vacations week at 9:00 from jul 15, Aug 31
+cru a nigthmode_stop_vac_jul "0 9 15-31 7 1-5 /jffs/scripts/nightmode.sh -off"
+cru a nigthmode_stop_vac_aug "0 9 * 8 1-5 /jffs/scripts/nightmode.sh -off"
+
+# Nightmode disabled : normal week : 7h00 tue-Fri, 6h30 mon
+cru a nigthmode_stop_week_mon "30 6 * 1-6,9-12 1 /jffs/scripts/nightmode.sh -off"
+cru a nigthmode_stop_week_mon_jul "30 6 1-15 7 1 /jffs/scripts/nightmode.sh -off"
+cru a nigthmode_stop_week "0 7 * 1-5,9-12 2-5 /jffs/scripts/nightmode.sh -off"
+cru a nigthmode_stop_week_jul "0 7 1-15 7 2-5 /jffs/scripts/nightmode.sh -off"
+
+# Nightmode disabled : weekend  9:00
+cru a nigthmode_stop_weekend "0 9 * * 0,6 /jffs/scripts/nightmode.sh -off"
+
+#---------------------------------

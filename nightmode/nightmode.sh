@@ -7,7 +7,10 @@
 # which disable scheduling as soon as the front panel button is pressed
 #
 # Date: 2017-05
-# Version 1.0
+# Version 1.0.1
+#
+#	1.0		First release
+#	1.0.1	Code deaning, introduce the led_ctrl alignment instead of on/off via a cronjob. Leds will align on 
 #
 # Features
 #	- Turn on / off wifi 2.4G and 5.0G
@@ -15,7 +18,6 @@
 #
 #
 
-status=`qcsapi_sockrpc rfstatus wifi0`
 
 show_help()
 {
@@ -32,11 +34,12 @@ case ${option} in
         -on)
 			#nightmode is on
 			/jffs/scripts/radio_ctrl.sh -off
-			/jffs/scripts/led_ctrl.sh -off		
+			cru a leds_align "*/2 * * * * /jffs/scripts/led_ctrl.sh -align"			
 		;;
 		-off)
 			#nightmode is off
 			/jffs/scripts/radio_ctrl.sh -on
+			cru d leds_align
 			/jffs/scripts/led_ctrl.sh -on
 		;;
 		*)
